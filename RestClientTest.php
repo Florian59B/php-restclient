@@ -100,8 +100,14 @@ class RestClientTest extends TestCase {
         $result = $api->get($TEST_SERVER_URL);
         
         $response_json = $result->decode_response();
+        $ua = "";
+        if(isset($response_json->headers->{"User-Agent"})){
+            $ua = $response_json->headers->{"User-Agent"};
+        }else{
+            $ua = $response_json->headers->{"user-agent"};
+        }
         $this->assertEquals("RestClient Unit Test", 
-            $response_json->headers->{"User-Agent"});
+            $ua);
     }
     
     public function test_json_patch(){
@@ -115,10 +121,24 @@ class RestClientTest extends TestCase {
                 'Content-Type' => 'application/json-patch+json'));
         $response_json = $result->decode_response();
         
+        $ct = "";
+        if(isset($response_json->headers->{"Content-Type"})){
+            $ct = $response_json->headers->{"Content-Type"};
+        }else{
+            $ct = $response_json->headers->{"content-type"};
+        }
+
         $this->assertEquals('application/json-patch+json', 
-            $response_json->headers->{"Content-Type"});
+            $ct);
+
+        $httpMethod = "";
+        if(isset($response_json->headers->{"X-HTTP-Method-Override"})){
+            $httpMethod = $response_json->headers->{"X-HTTP-Method-Override"};
+        }else{
+            $httpMethod = $response_json->headers->{"x-http-method-override"};
+        }    
         $this->assertEquals('PATCH', 
-            $response_json->headers->{"X-HTTP-Method-Override"});
+            $httpMethod);
         $this->assertEquals('PATCH', 
             $response_json->SERVER->REQUEST_METHOD);
         $this->assertEquals("{\"foo\":\"bar\"}", 
@@ -133,8 +153,15 @@ class RestClientTest extends TestCase {
             array('Content-Type' => 'application/json'));
         $response_json = $result->decode_response();
         
+        $ct = "";
+        if(isset($response_json->headers->{"Content-Type"})){
+            $ct = $response_json->headers->{"Content-Type"};
+        }else{
+            $ct = $response_json->headers->{"content-type"};
+        }
+
         $this->assertEquals('application/json', 
-            $response_json->headers->{"Content-Type"});
+            $ct);
         $this->assertEquals('POST', 
             $response_json->SERVER->REQUEST_METHOD);
         $this->assertEquals("{\"foo\":\"bar\"}", 
