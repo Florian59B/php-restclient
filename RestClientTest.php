@@ -23,12 +23,13 @@ if(php_sapi_name() == 'cli-server'){
 // 
 
 require 'restclient.php';
+use PHPUnit\Framework\TestCase;
 
 // This varible can be overridden with a PHPUnit XML configuration file.
 if(!isset($TEST_SERVER_URL))
     $TEST_SERVER_URL = "http://localhost:8888"; 
 
-class RestClientTest extends PHPUnit_Framework_TestCase {
+class RestClientTest extends TestCase {
     
     public function test_get(){
         global $TEST_SERVER_URL;
