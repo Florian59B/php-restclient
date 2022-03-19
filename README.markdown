@@ -240,8 +240,8 @@ Tests
 The test package includes a simple server script which returns debug information for verifying functionality. Start the server first, then run tests:
 
 ``` sh
-$ php -S localhost:8888 test.php
-$ phpunit test
+$ php -S localhost:8888 RestClientTest.php
+$ phpunit RestClientTest.php
 ```
 
 * Requires PHP > 5.5.7 in order for `getallheaders` data to populate.
